@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Sigil — a wax seal for Agent ID holders</title>
+<meta name="description" content="Agent Sigil is a free, soulbound on-chain badge for holders of an Agent ID (.ai name). One badge per address. No fee, no server, no promises.">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>AGENT SIGIL</h1>
+  <p class="sub">A wax seal for Agent ID holders</p>
+  <!-- Preview of the real on-chain badge art (token #1, from tokenURI) -->
+  <svg class="seal" xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" fill="#0f1026"/><circle cx="256" cy="256" r="200" fill="none" stroke="#d4af37" stroke-width="6"/><circle cx="256" cy="256" r="176" fill="none" stroke="#d4af37" stroke-width="2"/><circle cx="256" cy="256" r="150" fill="#1a1c3f" stroke="#2dd4bf" stroke-width="2"/><polygon points="256,128 366,320 146,320" fill="none" stroke="#d4af37" stroke-width="5" stroke-linejoin="round"/><polygon points="256,384 366,192 146,192" fill="none" stroke="#d4af37" stroke-width="5" stroke-linejoin="round"/><circle cx="256" cy="256" r="34" fill="#d4af37"/><text x="256" y="118" font-family="serif" font-size="30" fill="#d4af37" text-anchor="middle" letter-spacing="6">AGENT</text><text x="256" y="416" font-family="serif" font-size="30" fill="#d4af37" text-anchor="middle" letter-spacing="6">SIGIL</text><text x="256" y="452" font-family="monospace" font-size="20" fill="#2dd4bf" text-anchor="middle">#1</text><text x="256" y="52" font-family="monospace" font-size="15" fill="#8b8db0" text-anchor="middle">SOULBOUND &#183; NAME.AI</text></svg>
+  <p class="muted">Your Agent ID name cannot be bought, borrowed or transferred. Neither can its seal.</p>
+</header>
+
+<div class="notice" id="deployNote"></div>
+
+<section class="card">
+  <h2>1 · Connect</h2>
+  <p class="muted">Connect with your own wallet (injected provider). This page runs entirely in your browser — no server, no login session is stored anywhere, and we never ask for a seed phrase, private key, API secret or pairing code.</p>
+  <div class="row">
+    <button id="connectBtn">Connect wallet</button>
+    <span class="status" id="walletStatus">Not connected.</span>
+  </div>
+  <p class="status">Agent ID: <span id="agentStatus">—</span></p>
+</section>
+
+<section class="card" id="badgeBox">
+  <h2>2 · Mint your Sigil</h2>
+  <p>Free — you only pay BNB Smart Chain gas. One badge per address, and only while your wallet holds an Agent ID. The badge is <b>soulbound</b>: it cannot be transferred or sold, so it stays proof of <i>your</i> name.</p>
+  <div class="row">
+    <button id="mintBtn" disabled>Mint my Sigil (free)</button>
+    <span class="pill" id="badgeId"></span>
+  </div>
+  <p class="status" id="badgeStatus">—</p>
+  <p class="status" id="mintStatus"></p>
+  <div id="badgeArt"></div>
+  <p class="muted">Total Sigils minted: <b id="totalMinted">—</b></p>
+  <p class="muted">Changed your mind? The contract lets you burn your own badge (gas only). Burning frees your address to mint again later — for example if you want a fresh seal after your Agent ID changes.</p>
+</section>
+
+<section class="card">
+  <h2>Check any address</h2>
+  <p class="muted">Read-only lookup — no wallet needed. See whether an address holds an Agent ID and a Sigil.</p>
+  <div class="row">
+    <input type="text" id="lookupInput" placeholder="0x…" autocomplete="off" spellcheck="false">
+    <button id="lookupBtn" class="ghost">Check</button>
+  </div>
+  <p class="status" id="lookupResult"></p>
+</section>
+
+<section class="card">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li>You hold an <b>Agent ID</b> (.ai name) — a non-transferable ERC-721 on BNB Smart Chain.</li>
+    <li>You connect your wallet and press <b>Mint</b>. The contract checks on-chain that your address holds at least one Agent ID (<code>balanceOf &gt; 0</code>).</li>
+    <li>If the check passes, you receive <b>Sigil #N</b> — an ERC-721 whose name, description and image live entirely on-chain (JSON + SVG, base64). Nothing depends on a server staying alive.</li>
+    <li>The badge can never be transferred or approved to anyone. It is yours as long as you keep it; burn it any time to renounce it.</li>
+  </ol>
+  <h2>What this is not</h2>
+  <p class="muted">Agent Sigil is a proof-of-identity badge, not an investment. It pays no yield, promises no return, and gives no financial benefit. There is no token sale, no fee, and no admin key: the contract has no owner and no privileged functions at all — nobody, including its deployer, can mint for you, change the art, or take a badge away.</p>
+  <p class="muted">Contract: open-source, verified on BscScan after deploy. Agent ID contract: <code>0x60b9262456de011f7d15a54cdd8c48baaa8b022f</code>.</p>
+</section>
+
+<footer>
+  Agent Sigil — built for the Binance Wallet × BNB Chain Agent ID Hackathon.<br>
+  Not affiliated with, endorsed by, or connected to Binance, BNB Chain or SPACE ID.
+</footer>
+
+</div>
+</body>
+</html>
